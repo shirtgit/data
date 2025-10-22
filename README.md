@@ -15,7 +15,7 @@ OpenWeather API를 사용한 Streamlit 기반 실시간 날씨 정보 웹 애플
 - Python 3.7 이상
 - OpenWeather API 키
 
-## 🛠️ 설치 및 실행
+## 🛠️ 로컬 설치 및 실행
 
 ### 1. 저장소 클론 및 이동
 ```bash
@@ -29,8 +29,8 @@ pip install -r requirements.txt
 ```
 
 ### 3. API 키 설정
-`config.py` 파일에서 OpenWeather API 키를 확인하거나 수정하세요:
-```python
+`.streamlit/secrets.toml` 파일에서 OpenWeather API 키를 설정하세요:
+```toml
 OPENWEATHER_API_KEY = "your-api-key-here"
 ```
 
@@ -38,6 +38,36 @@ OPENWEATHER_API_KEY = "your-api-key-here"
 ```bash
 streamlit run app.py
 ```
+
+## 🚀 Streamlit Cloud 배포
+
+### 1. GitHub 저장소 준비
+```bash
+git add .
+git commit -m "날씨 앱 배포 준비"
+git push origin main
+```
+
+### 2. Streamlit Cloud 배포
+1. [Streamlit Cloud](https://share.streamlit.io/)에 접속
+2. GitHub 계정으로 로그인
+3. "New app" 클릭
+4. 저장소 선택: `your-username/data`
+5. Branch: `main`
+6. Main file path: `app.py`
+7. "Deploy!" 클릭
+
+### 3. Secrets 설정 (중요!)
+배포 후 앱 설정에서 다음 secrets를 추가해야 합니다:
+
+**앱 대시보드 → Settings → Secrets**
+```toml
+OPENWEATHER_API_KEY = "d67076f84b91e30c008fe16e891ecc2e"
+```
+
+### 4. 배포 완료
+- 배포가 완료되면 공개 URL을 받게 됩니다
+- 예: `https://your-app-name.streamlit.app`
 
 ## 📁 프로젝트 구조
 
@@ -111,8 +141,16 @@ data/
 
 ## 🛡️ 보안 고려사항
 
-- API 키는 `config.py` 파일에 저장되어 있습니다.
-- 실제 배포 시에는 환경 변수를 사용하여 API 키를 관리하는 것을 권장합니다.
+- **로컬 개발**: API 키는 `.streamlit/secrets.toml` 파일에 저장 (Git 추적되지 않음)
+- **배포 환경**: Streamlit Cloud의 Secrets 관리 기능 사용
+- `.gitignore`에 의해 민감한 정보가 Git에 커밋되지 않도록 보호
+
+## ⚠️ 배포 시 주의사항
+
+1. **Secrets 설정 필수**: 배포 후 반드시 Streamlit Cloud에서 API 키를 설정해야 합니다
+2. **파일 구조 확인**: `app.py`가 루트 디렉토리에 있어야 합니다
+3. **requirements.txt**: 모든 필요한 패키지가 명시되어 있어야 합니다
+4. **API 키 유효성**: OpenWeather API 키가 유효하고 활성화되어 있어야 합니다
 
 ## 🤝 기여
 
